@@ -7,8 +7,6 @@ This repository contains a **single Java file** (`CompactMain.java`) that implem
 1. **Bellman-Ford** – Finds the shortest paths from a single source to all other vertices in a **directed** graph, allowing for **negative edge weights**.
 2. **Prim’s** – Constructs a **Minimum Spanning Tree (MST)** of an **undirected** graph starting from a specified source vertex.
 
-The code supports **both** algorithms, choosing which one to run based on the first line of input (“Bellman-ford” or “Prim’s”).
-
 This project is written for the Boğaziçi University Master of Science in Software Engineering SWE 510.01 Data Structures and Algorithms course to showcase the usage of Bellman-Ford and Prim's algorithms on graphs.
 
 ---
@@ -31,7 +29,6 @@ This project is written for the Boğaziçi University Master of Science in Softw
 - [Algorithm Descriptions](#algorithm-descriptions)
   - [Bellman-Ford Algorithm](#bellman-ford-algorithm)
   - [Prim’s Algorithm](#prims-algorithm)
-- [Contact / Further Enhancements](#contact--further-enhancements)
 
 ---
 
@@ -48,8 +45,6 @@ This project is written for the Boğaziçi University Master of Science in Softw
    java CompactMain
    ```
 5. **Provide input** in the **formats described** below (manually, or redirect from a file).
-   - The first line should be either **`Bellman-ford`** or **`Prim’s`**.
-   - Then specify the number of edges, lines describing edges, and finally the source vertex line.
 
 ---
 
@@ -170,6 +165,7 @@ Implements **Prim’s MST** logic with static methods:
   2. Builds MST using a **min-heap** (`PriorityQueue<int[]>`):
      - Continually extract the vertex with the smallest key.
      - Update neighbors that could be connected with cheaper edges.
+     - Priority Queue has the weight and vertex index pair `[weight, vertex]`.
   3. Computes MST total weight and prints results.
 
 ### 4. `BellmanFordAlgorithm` Class
@@ -198,7 +194,7 @@ Contains the `main(...)` method. Handles:
 
 ### Bellman-Ford Algorithm
 
-**Purpose**: Finds the shortest path from a single source to all other vertices in a **directed** graph, which **may contain negative edge weights** (but no negative cycles reachable from the source).
+**Purpose**: Finds the shortest path from a single source to all other vertices in a **directed** graph, which **may contain negative edge weights**.
 
 1. **Initialization**:
    - `distance[source] = 0`; all other `distance[v] = ∞`.
@@ -206,9 +202,7 @@ Contains the `main(...)` method. Handles:
    - For each directed edge `(u, v, w)`, if `distance[u] + w < distance[v]`, update `distance[v] = distance[u] + w`.
    - This progressively improves estimates of the shortest paths.
 3. **Negative Cycle Detection**:
-   - Perform one more pass. If any `distance[v]` can still be improved, a **negative cycle** exists.
-
-**Complexity**: O(V \* E), where V is the number of vertices, E is the number of edges.
+   - Perform one more pass. If any `distance[v]` can still be improved, a **negative cycle** exists, and the algorithm stops means that the shortest path can be reduced indefinitely.
 
 ### Prim’s Algorithm
 
@@ -222,20 +216,4 @@ Contains the `main(...)` method. Handles:
    - Mark it as included in MST (`inMST[v] = true`).
    - Update `key[w]` of the neighbors `w` if the new edge to w is cheaper.
 3. **Repeat** until all vertices are in MST or the min-heap is empty.
-
-**Complexity**:
-
-- Using a binary min-heap (priority queue), O(E log V).
-
----
-
-## Contact / Further Enhancements
-
-- **Contact**: If you encounter issues or have questions, please open an issue or reach out to the code’s author.
-- **Potential enhancements**:
-  - Parse multiple test cases in a single run.
-  - Add **Dijkstra** or **Kruskal** algorithms.
-  - Incorporate more robust error handling and input validation.
-
-Enjoy exploring **Bellman-Ford** and **Prim’s** with this sample Java implementation!
 
